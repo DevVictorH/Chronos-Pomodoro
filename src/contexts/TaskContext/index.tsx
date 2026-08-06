@@ -1,46 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import type { TaskStateModel } from "../../models/TaskStateModel";
+import { initialTaskState } from "./initialTaskState";
 
-const initialState: TaskStateModel = {
-  tasks: [],
-  secondsRemaining: 0,
-  formattedSecondsRemaining: '00:00',
-  activeTask: null,
-  currentCycle: 0,
-  config: {
-    work: 25,
-    shortBreakDuration: 5,
-    longBreakDuration: 15
-  }
-}
 
-type TaskContextProps = {
-  state: TaskStateModel
-  setState: React.Dispatch<React.SetStateAction<TaskStateModel>>
-}
 
-const initiaContextValue = {
-  state: initialState,
-  setState: () => {}
-}
 
-type TaskContextProviderProps = {
-  children: React.ReactNode
-}
-
-export const TaskContext = createContext<TaskContextProps>(initiaContextValue);
-
-export function TaskContextProvider({ children }: TaskContextProviderProps) {
-    const [state, setState] = useState(initialState);
-
-    return (
-        <TaskContext.Provider value={{state, setState}}>
-            {children}
-        </TaskContext.Provider>
-    )
-}
-
-export function useTaskContext(){
-        return useContext(TaskContext);
-    }
 
