@@ -1,4 +1,4 @@
-import { PlayCircleIcon } from "lucide-react";
+import { PlayCircleIcon, StopCircleIcon } from "lucide-react";
 import { Cycles } from "../Cycles";
 import { DefaultButton } from "../DefaultButton";
 import { DefaultInput } from "../DefaultInput";
@@ -7,6 +7,7 @@ import type { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { getNextCycleType } from "../../utils/getNextCycleType";
 import { getNextCycle } from "../../utils/getNextCycle";
+import { formatSecondsToMinutes } from "../../utils/formatSecondsToMinutes";
 
 export function MainForm() {
 
@@ -43,7 +44,7 @@ export function MainForm() {
       activeTask: newTask,
       currentCycle: nextCycle,
       secondsRemaining,
-      formattedSecondsRemaining: "00:00",
+      formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining),
       tasks: [...prevState.tasks, newTask],
     }))
 
@@ -56,6 +57,7 @@ export function MainForm() {
           type='text' id='meuInput' labelText='Task' placeholder='Digite algo'
           value={taskName}
           onChange={e => setTaskName(e.target.value)}
+          disabled={!!state.activeTask}
         />
 
       </div>
@@ -64,12 +66,30 @@ export function MainForm() {
         <p>Proximo intervalo</p>
       </div>
 
-      <div className='formRow'>
-        <Cycles />
-      </div>
+      {state.currentCycle > 0 && (
+        <div className='formRow'>
+          <Cycles />
+        </div>
+      )}
 
       <div className='formRow'>
-        <DefaultButton icon={<PlayCircleIcon />} />
+        {!state.activeTask ?(
+          <DefaultButton 
+          arial-label='Iniciar tarefa'
+          title="Iniciar nova tarefa"
+          type='submit' 
+          icon={<PlayCircleIcon />} 
+          />
+        ) : (
+          <DefaultButton 
+          arial-label='Interromper tarefa'
+          title="Interromper tarefa"
+          type='button'
+          color='red' 
+          icon={<StopCircleIcon />} 
+          />
+        )}
+        
       </div>
 
     </form>
