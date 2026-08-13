@@ -7,15 +7,28 @@ import type { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { getNextCycleType } from "../../utils/getNextCycleType";
 import { getNextCycle } from "../../utils/getNextCycle";
-import { formatSecondsToMinutes } from "../../utils/formatSecondsToMinutes";
+import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
+import { Tips } from "../Tips";
 
 export function MainForm() {
 
-  const { state, setState } = useTaskContext()
+  const { state, dispatch } = useTaskContext()
   const [taskName, setTaskName] = useState<string>('');
 
   const nextCycle = getNextCycle(state.currentCycle);
   const nextCycleType = getNextCycleType(nextCycle);
+
+  const tipsForWhenActiveTask = {
+    work: <span>Foque por {state.config.work} minutos</span>,
+    shortBreak: <span>descanse por {state.config.shortBreak} minutos</span>,
+    longBreak: <span>descanso longo</span>
+  }
+
+   const tipsForWhenNoActiveTask = {
+    work: <span>Proximo ciclo é de {state.config.work} minutos</span>,
+    shortBreak: <span>Proximo descanso é de {state.config.shortBreak} minutos</span>,
+    longBreak: <span>Proximo ciclo é de descanso longo</span>
+  }
 
   function handleStartNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -24,8 +37,6 @@ export function MainForm() {
       alert('Por favor, digite o nome da tarefa.')
       return
     }
-
-    console.log('Tarefa iniciada:', taskName);
 
     const newTask: TaskModel = {
       id: Date.now().toString(),
@@ -37,17 +48,11 @@ export function MainForm() {
       type: nextCycleType,
     }
 
-    const secondsRemaining = newTask.duration * 60;
+    dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
+  }
 
-    setState(prevState => ({
-      ...prevState,
-      activeTask: newTask,
-      currentCycle: nextCycle,
-      secondsRemaining,
-      formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining),
-      tasks: [...prevState.tasks, newTask],
-    }))
-
+  function handleInterruptTask() {
+    dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
 
   return (
@@ -63,7 +68,7 @@ export function MainForm() {
       </div>
 
       <div className='formRow'>
-        <p>Proximo intervalo</p>
+          <Tips />
       </div>
 
       {state.currentCycle > 0 && (
@@ -73,23 +78,26 @@ export function MainForm() {
       )}
 
       <div className='formRow'>
-        {!state.activeTask ?(
-          <DefaultButton 
-          arial-label='Iniciar tarefa'
-          title="Iniciar nova tarefa"
-          type='submit' 
-          icon={<PlayCircleIcon />} 
+        {!state.activeTask ? (
+          <DefaultButton
+            arial-label='Iniciar tarefa'
+            title="Iniciar nova tarefa"
+            type='submit'
+            icon={<PlayCircleIcon />}
+            key="startButton"
           />
         ) : (
-          <DefaultButton 
-          arial-label='Interromper tarefa'
-          title="Interromper tarefa"
-          type='button'
-          color='red' 
-          icon={<StopCircleIcon />} 
+          <DefaultButton
+            arial-label='Interromper tarefa'
+            title="Interromper tarefa"
+            type='button'
+            color='red'
+            icon={<StopCircleIcon />}
+            onClick={handleInterruptTask}
+            key="stopButton"
           />
         )}
-        
+
       </div>
 
     </form>
