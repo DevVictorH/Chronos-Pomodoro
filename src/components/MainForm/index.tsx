@@ -24,7 +24,7 @@ export function MainForm() {
     longBreak: <span>descanso longo</span>
   }
 
-   const tipsForWhenNoActiveTask = {
+  const tipsForWhenNoActiveTask = {
     work: <span>Proximo ciclo é de {state.config.work} minutos</span>,
     shortBreak: <span>Proximo descanso é de {state.config.shortBreak} minutos</span>,
     longBreak: <span>Proximo ciclo é de descanso longo</span>
@@ -68,7 +68,7 @@ export function MainForm() {
       </div>
 
       <div className='formRow'>
-          <Tips />
+        <Tips />
       </div>
 
       {state.currentCycle > 0 && (
