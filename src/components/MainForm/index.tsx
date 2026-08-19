@@ -9,6 +9,8 @@ import { getNextCycleType } from "../../utils/getNextCycleType";
 import { getNextCycle } from "../../utils/getNextCycle";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 import { Tips } from "../Tips";
+import { showMessage } from "../../adapters/showMessage";
+
 
 export function MainForm() {
 
@@ -32,9 +34,10 @@ export function MainForm() {
 
   function handleStartNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    showMessage.dismiss()
 
     if (taskName.trim() === '') {
-      alert('Por favor, digite o nome da tarefa.')
+      showMessage.warn('Por favor, digite o nome da tarefa.')
       return
     }
 
@@ -52,6 +55,7 @@ export function MainForm() {
   }
 
   function handleInterruptTask() {
+    showMessage.dismiss()
     dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
 
