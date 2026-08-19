@@ -7,31 +7,33 @@
 
 import type { TaskModel } from "../../models/TaskModel"
 
-export enum TaskActionTypes {
-    START_TASK = 'START_NEW_TASK',
-    INTERRUPT_TASK = 'INTERRUPT_TASK',
-    COUNT_DOWN = 'COUNT_DOWN',
-    COMPLETE_TASK = 'COMPLETE_TASK',
-}
+export const TaskActionTypes = {
+    START_TASK: 'START_NEW_TASK',
+    INTERRUPT_TASK: 'INTERRUPT_TASK',
+    COUNT_DOWN: 'COUNT_DOWN',
+    COMPLETE_TASK: 'COMPLETE_TASK',
+} as const;
 
 export type TaskActionsWithPayload =
     | {
-        type: TaskActionTypes.START_TASK
+        type: typeof TaskActionTypes.START_TASK
         payload: TaskModel
     }
     | {
-        type: TaskActionTypes.COUNT_DOWN
+        type: typeof TaskActionTypes.COUNT_DOWN
         payload: { secondsRemaining: number }
     }
 
 
 export type TaskActionsWithoutPayload =
     {
-        type: TaskActionTypes.INTERRUPT_TASK
+        type: typeof TaskActionTypes.INTERRUPT_TASK
     }
     | {
-        type: TaskActionTypes.COMPLETE_TASK
+        type: typeof TaskActionTypes.COMPLETE_TASK
     };
 
-export type TaskActionModel = TaskActionsWithPayload | TaskActionsWithoutPayload;
+export type TaskActionModel =
+    | TaskActionsWithPayload
+    | TaskActionsWithoutPayload;
 

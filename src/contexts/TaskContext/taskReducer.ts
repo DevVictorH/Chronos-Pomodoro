@@ -35,11 +35,10 @@ export function taskReducer(state: TaskStateModel, action: TaskActionModel): Tas
                 })
             }
         } case TaskActionTypes.COUNT_DOWN: {
-            const { secondsRemaining } = action.payload
             return {
                 ...state,
-                secondsRemaining: secondsRemaining,
-                formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining),
+                secondsRemaining: action.payload.secondsRemaining,
+                formattedSecondsRemaining: formatSecondsToMinutes(action.payload.secondsRemaining),
             }
         } case TaskActionTypes.COMPLETE_TASK:{
             return {
