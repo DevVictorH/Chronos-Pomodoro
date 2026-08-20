@@ -1,9 +1,9 @@
 import './styles/theme.css'
 import './styles/global.css'
 import 'react-toastify/dist/ReactToastify.css'
-import { Home } from './pages/Home'
 import { TaskContextProvider } from './contexts/TaskContext/taskContextProvider'
 import { MessagesContainer } from './components/MessagesContainer'
+import { MainRouter } from './routers/MainRouters'
 
 
 export function App() {
@@ -12,7 +12,7 @@ export function App() {
     <TaskContextProvider>
 
       <MessagesContainer>
-        <Home />
+      <MainRouter />
       </MessagesContainer>
 
     </TaskContextProvider>
