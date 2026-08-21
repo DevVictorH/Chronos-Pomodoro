@@ -16,6 +16,7 @@ export function MainForm() {
 
   const { state, dispatch } = useTaskContext()
   const [taskName, setTaskName] = useState<string>('');
+  const lastNameInput = state.tasks[state.tasks.length - 1]?.name || ''
 
   const nextCycle = getNextCycle(state.currentCycle);
   const nextCycleType = getNextCycleType(nextCycle);
@@ -67,6 +68,7 @@ export function MainForm() {
           value={taskName}
           onChange={e => setTaskName(e.target.value)}
           disabled={!!state.activeTask}
+          defaultValue={lastNameInput}
         />
 
       </div>
