@@ -4,8 +4,36 @@ import { DefaultButton } from "../../components/DefaultButton";
 import { Heading } from "../../components/Heading";
 import { MainTemplates } from "../../templates/MainTemplate";
 import styles from "./styles.module.css"
+import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
+import { formatDate } from "../../utils/formatDate";
+import { getTaskStatus } from "../../utils/getTaskStatus";
+import { useState } from "react";
+import { sortTasks, type SortTasksOptions } from "../../utils/sortTasks";
 
 export function History() {
+    const { state } = useTaskContext()
+    const [sortTasksOptions, setSortTasksOptions] = useState<SortTasksOptions>(() => {
+        return {
+            tasks: sortTasks({ tasks: state.tasks }),
+            field: 'startDate',
+            direction: 'desc'
+        }
+    });
+
+    function handleSortTasks({ field }: Pick<SortTasksOptions, 'field'>) {
+        const newDirection = sortTasksOptions.direction === 'desc' ? 'asc' : 'desc'
+
+        setSortTasksOptions({
+            tasks: sortTasks({
+                direction: newDirection,
+                tasks: sortTasksOptions.tasks,
+                field,
+            }),
+            direction: newDirection,
+            field,
+        })
+    }
+
     return (
         <MainTemplates>
 
@@ -25,23 +53,31 @@ export function History() {
                     <table>
                         <thead>
                             <tr>
-                                <th>Tarefa</th>
-                                <th>Duração</th>
-                                <th>Data</th>
+                                <th onClick={() => handleSortTasks({ field: 'name' })}
+                                    className={styles.thSort}>Tarefa ↕</th>
+                                <th onClick={() => handleSortTasks({ field: 'duration' })}
+                                    className={styles.thSort}>Duração ↕</th>
+                                <th onClick={() => handleSortTasks({ field: 'startDate' })}
+                                    className={styles.thSort}>Data ↕</th>
                                 <th>Status</th>
                                 <th>Tipo</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {Array.from({ length: 20 }).map(() => {
+                            {sortTasksOptions.tasks.map(task => {
+                                const taskTypeMap = {
+                                    work: "Foco",
+                                    shortBreak: "Descanso curto",
+                                    longBreak: "Descanso longo"
+                                }
                                 return (
-                                    <tr>
-                                        <td>Estudar</td>
-                                        <td>25 min</td>
-                                        <td>19/08/2026 22:00</td>
-                                        <td>Completa</td>
-                                        <td>Foco</td>
+                                    <tr key={task.id}>
+                                        <td>{task.name}</td>
+                                        <td>{task.duration}</td>
+                                        <td>{formatDate(task.startDate)}</td>
+                                        <td>{getTaskStatus(task, state.activeTask)}</td>
+                                        <td>{taskTypeMap[task.type]}</td>
                                     </tr>
                                 )
                             })}
