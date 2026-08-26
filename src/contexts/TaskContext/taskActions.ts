@@ -12,6 +12,7 @@ export const TaskActionTypes = {
     INTERRUPT_TASK: 'INTERRUPT_TASK',
     COUNT_DOWN: 'COUNT_DOWN',
     COMPLETE_TASK: 'COMPLETE_TASK',
+    RESET_STATE: 'RESET_STATE',
 } as const;
 
 export type TaskActionsWithPayload =
@@ -31,7 +32,10 @@ export type TaskActionsWithoutPayload =
     }
     | {
         type: typeof TaskActionTypes.COMPLETE_TASK
-    };
+    }
+    | {
+        type: typeof TaskActionTypes.RESET_STATE
+    }
 
 export type TaskActionModel =
     | TaskActionsWithPayload
