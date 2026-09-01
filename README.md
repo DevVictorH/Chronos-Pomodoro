@@ -1,75 +1,55 @@
-# React + TypeScript + Vite
+# Chronos Pomodoro ⏱️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação web moderna para gerenciamento de tempo usando a técnica Pomodoro, construída com **React 19**, **TypeScript** e **Vite**.
 
-Currently, two official plugins are available:
+## 🎯 Sobre o Projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+O **Chronos Pomodoro** é uma ferramenta de produtividade que implementa a técnica Pomodoro, ajudando você a:
 
-## React Compiler
+- ✅ Organizar suas tarefas de forma eficiente
+- ⏲️ Trabalhar em ciclos de tempo focado (Pomodoro)
+- 📊 Acompanhar seu histórico de tarefas completadas
+- 🎨 Personalizar suas preferências de tempo
+- 🔊 Receber notificações ao completar ciclos
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## 🚀 Funcionalidades
 
-Note: This will impact Vite dev & build performances.
+### Gerenciamento de Tarefas
+- Criar novas tarefas com descrição
+- Organizar tarefas em ciclos Pomodoro
+- Marcar tarefas como concluídas
+- Visualizar histórico de tarefas
 
-## Expanding the ESLint configuration
+### Cronômetro Inteligente
+- Sessões de trabalho (Pomodoro)
+- Intervalos de pausa curta
+- Pausas longas após múltiplos ciclos
+- Indicador visual do progresso
+- Sons de notificação ao fim de cada ciclo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Personalização
+- Ajustar duração de sessões
+- Configurar intervalos de pausa
+- Salvar preferências localmente
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Informações
+- Guia sobre a técnica Pomodoro
+- Dicas de produtividade
+- Página sobre o projeto
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🛠️ Stack Tecnológico
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Frontend
+- **React 19** - Interface de usuário moderna
+- **TypeScript** - Type safety e melhor desenvolvimento
+- **Vite** - Build rápido e otimizado
+- **React Router** - Navegação entre páginas
+- **React Toastify** - Notificações elegantes
+- **Lucide React** - Ícones de alta qualidade
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Desenvolvimento
+- **ESLint** - Linting de código
+- **CSS Modules** - Estilos encapsulados
+- **Web Workers** - Timer em thread separada
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+##
